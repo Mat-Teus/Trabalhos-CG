@@ -1,11 +1,13 @@
 package view;
 
+import collision.CollisionChecker;
 import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
 //configurações da tela
@@ -23,14 +25,17 @@ public class GamePanel extends JPanel implements Runnable{
     public int FPS = 60; 
     
 //Variaveis para composição com o game panel
-    Thread gameThread;   
-    KeyHandler tecla = new KeyHandler();   
-    Player player = new Player(this, tecla);
+    public Thread gameThread;   
+    public KeyHandler tecla = new KeyHandler();
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    public Player player = new Player(this, tecla);
 
 //Função que carrega a posição do jogador no game panel
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
+    
+    public TileManager tileM = new TileManager(this);
 
 //Construtor do game panel
     public GamePanel(){
@@ -92,7 +97,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
     //Código para que se apareça as imagens no game panel
         super.paintComponent(g);       
-        Graphics2D g2 = (Graphics2D) g;      
+        Graphics2D g2 = (Graphics2D) g;     
+        tileM.draw(g2);
         player.draw(g2);       
         g2.dispose();
     }

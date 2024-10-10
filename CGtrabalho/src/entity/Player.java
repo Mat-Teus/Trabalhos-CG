@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -11,12 +12,17 @@ public class Player extends Entity{
 //Atributos para a classe
     GamePanel gp;
     KeyHandler tecla;
+    public int screenX = 0;
+    public int screenY = 0;
+    
 //Criação do construtor
     public Player(GamePanel gp, KeyHandler tecla) {
         this.gp = gp;
         this.tecla = tecla;
         setDefaultValues();
         getImagemPlayer();
+        screenX = gp.telaLargura/2 - (gp.tileTamanho/2);
+        screenY = gp.telaAltura/2 - (gp.tileTamanho/2);
     }
 
 //Função para carregar os valores padrões dos atributos a serem usados
@@ -77,6 +83,9 @@ public class Player extends Entity{
             }else if(tecla.downPressed == false){
                 speed = 0;
             }
+            
+            collisionOn = false;
+            gp.cChecker.checkTile(this);      
     }
 
 //Funçaõ para carregar as imagens na tela do usuário
