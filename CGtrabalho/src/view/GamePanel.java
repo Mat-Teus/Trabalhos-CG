@@ -4,12 +4,15 @@ import collision.CollisionChecker;
 import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
+    public int gameState = 0;
+    
 //configurações da tela
     public final int tileTamanhoOriginal = 16; //16x16 tile
     public final int escala = 3;    
@@ -34,7 +37,8 @@ public class GamePanel extends JPanel implements Runnable{
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
-    
+
+//Carregando variável para criação do cenário
     public TileManager tileM = new TileManager(this);
 
 //Construtor do game panel
@@ -44,7 +48,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);       
         this.addKeyListener(tecla);
         this.setFocusable(true);
-        
     }
  
 //Função para começar a game thread
@@ -95,11 +98,20 @@ public class GamePanel extends JPanel implements Runnable{
     
     @Override
     public void paintComponent(Graphics g){
-    //Código para que se apareça as imagens no game panel
         super.paintComponent(g);       
-        Graphics2D g2 = (Graphics2D) g;     
-        tileM.draw(g2);
-        player.draw(g2);       
-        g2.dispose();
+        Graphics2D g2 = (Graphics2D) g; 
+            if(gameState == 0){
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
+                String Texto = "Jogo de corrida super legal";
+                int x = telaAltura/8;
+                int y = 50;
+                g2.setColor(Color.red);
+                g2.drawString(Texto, x, y);
+            }else if(gameState == 1){
+            //Código para que se apareça as imagens no game panel    
+                tileM.draw(g2);
+                player.draw(g2);       
+                g2.dispose();
+            }
     }
 }

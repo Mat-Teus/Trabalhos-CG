@@ -1,6 +1,10 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Janela extends JFrame{
 //Criando o conteiner da janela
@@ -12,7 +16,6 @@ public class Janela extends JFrame{
         janela.setDefaultCloseOperation(EXIT_ON_CLOSE);
         janela.setResizable(false);
         janela.setTitle("Jogo de corrida");
-        
     
     //Criação do game panel
         GamePanel gamePanel = new GamePanel();
@@ -23,7 +26,7 @@ public class Janela extends JFrame{
     //Deixando a janela visível e a colocando no meio da tela    
         janela.setLocationRelativeTo(null);
         janela.setVisible(true);
-    
+        
     //Dando ínicio ao jogo
         gamePanel.startGameThread();    
     }

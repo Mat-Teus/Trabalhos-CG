@@ -31,6 +31,7 @@ public class Player extends Entity{
         y = 100;
         speed = 0;
         direction = "right";
+        solidArea = new Rectangle(8, 8, 32, 32); // Ajuste os valores conforme necessário
     }
 
     //Função que carrega as imagens que serão usadas pelo player
@@ -47,45 +48,57 @@ public class Player extends Entity{
 
 //Função que atualiza as variaveis para gerar a movimentação
     public void update(){
-        //Caso alguma tecla é pressionada, a movimentação do veiculo acontece
-            if(tecla.rightPressed == true){
-                direction = "right";
-                if(speed < 10){
-                    speed++;
-                }
-                x += speed;
-            }else if(tecla.leftPressed == true){
-                direction = "left";
-                if(speed < 10){
-                    speed++;
-                }
-                x -= speed;
-            }else if(tecla.upPressed == true){
-                direction = "up";
-                if(speed < 10){
-                    speed++;
-                }
-                y -= speed;
-            }else if(tecla.downPressed == true){
-                direction = "down";
-                if(speed < 10){
-                    speed++;
-                }
-                y += speed;
-                
-        //Essa parte do código diminui a velocidade do carro para 0 caso deixe de pressionar alguma tecla
-            }else if(tecla.rightPressed == false){
-                speed = 0;
-            }else if(tecla.leftPressed == false){
-                speed = 0;
-            }else if(tecla.rightPressed == false){
-                speed = 0;
-            }else if(tecla.downPressed == false){
-                speed = 0;
+        if(tecla.rightPressed || tecla.leftPressed || tecla.upPressed || tecla.downPressed) {
+        // Ajustar a direção e aumentar a velocidade
+        if(tecla.rightPressed) {
+            direction = "right";
+            if(speed < 10){
+                speed++;
             }
-            
-            collisionOn = false;
-            gp.cChecker.checkTile(this);      
+        }else if(tecla.leftPressed) {
+            direction = "left";
+            if(speed<10){ 
+                speed++;
+            }
+        }else if(tecla.upPressed){
+            direction = "up";
+            if(speed<10){
+                speed++;
+            }
+        }else if(tecla.downPressed){
+            direction = "down";
+            if(speed<10){
+                speed++;
+            }
+        }
+        
+        // Verificar colisão
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        
+        // Movimentar se não houver colisão
+        if(collisionOn == false){
+            switch(direction) {
+                case "right": 
+                    x += speed; 
+                    break;
+                case "left":
+                    x -= speed; 
+                    break;
+                case "up": 
+                    y -= speed; 
+                    break;
+                case "down":
+                    y += speed; 
+                    break;
+            }
+        }else{
+            speed = 0; // Reduzir a velocidade se houver colisão
+        }
+    }else{
+        // Reduzir a velocidade se nenhuma tecla for pressionada
+        speed = 0;
+        }      
     }
 
 //Funçaõ para carregar as imagens na tela do usuário
