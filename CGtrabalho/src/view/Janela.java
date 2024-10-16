@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,7 +12,7 @@ public class Janela extends JFrame{
     JFrame janela = new JFrame();
     
 //Construtor da janela
-    public Janela(){
+    public Janela() throws IOException{
     //Configuração dos padrões da janela
         janela.setDefaultCloseOperation(EXIT_ON_CLOSE);
         janela.setResizable(false);

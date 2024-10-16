@@ -1,5 +1,6 @@
 package tile;
 
+import collision.CollisionChecker;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,11 +8,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import view.GamePanel;
+import view.KeyHandler;
 
 public class TileManager {
     public GamePanel gp;
     public Tile[] tile;
     public int mapTileNum[][];
+    public int pista = 0; 
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -19,6 +22,14 @@ public class TileManager {
         mapTileNum = new int [gp.maxTelaColuna][gp.maxTelaLinha]; 
         getTileImage();
         loadMap("/mapa/mapa01.txt");
+    }
+    
+    public TileManager(GamePanel gp, CollisionChecker cChecker){
+        this.gp = gp;
+        tile = new Tile[10];
+        mapTileNum = new int [gp.maxTelaColuna][gp.maxTelaLinha]; 
+        getTileImage();
+        loadMap("/mapa/mapa02.txt");
     }
     
     public void getTileImage(){
@@ -34,13 +45,14 @@ public class TileManager {
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/Fundo/quadriculada.png"));
             tile[2].collision = false;
+            tile[2].linhachegada = true;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public void loadMap(String filePath){
+    public void loadMap(String filePath){      
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

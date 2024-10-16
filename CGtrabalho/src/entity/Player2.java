@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import view.GamePanel;
 import view.KeyHandler;
 
-public class Player extends Entity{
+public class Player2 extends Entity{
 //Atributos para a classe
     GamePanel gp;
     KeyHandler tecla;
@@ -17,7 +17,7 @@ public class Player extends Entity{
     public int voltas = 0;
     
 //Criação do construtor
-    public Player(GamePanel gp, KeyHandler tecla) {
+    public Player2(GamePanel gp, KeyHandler tecla) {
         this.gp = gp;
         this.tecla = tecla;
         setDefaultValues();
@@ -27,21 +27,21 @@ public class Player extends Entity{
     }
 
 //Função para carregar os valores padrões dos atributos a serem usados
-    public void setDefaultValues() {
+    public void setDefaultValues(){
         x = 100;
-        y = 100;
+        y = 120;
         speed = 0;
         direction = "right";
-        solidArea = new Rectangle(8, 8, 32, 32); // Ajuste os valores conforme necessário
+        solidArea = new Rectangle(8, 8, 32, 32);
     }
 
     //Função que carrega as imagens que serão usadas pelo player
-    public void getImagemPlayer() {
+    public void getImagemPlayer(){
         try{
-            right = ImageIO.read(getClass().getResourceAsStream("/player/Car_Right.png"));
-            left = ImageIO.read(getClass().getResourceAsStream("/player/Car_Left.png"));
-            up = ImageIO.read(getClass().getResourceAsStream("/player/Car_Up.png"));
-            down = ImageIO.read(getClass().getResourceAsStream("/player/Car_Down.png"));
+            right = ImageIO.read(getClass().getResourceAsStream("/player/Car2_Right.png"));
+            left = ImageIO.read(getClass().getResourceAsStream("/player/Car2_Left.png"));
+            up = ImageIO.read(getClass().getResourceAsStream("/player/Car2_Up.png"));
+            down = ImageIO.read(getClass().getResourceAsStream("/player/Car2_Down.png"));
         } catch(IOException e){
             e.printStackTrace();
         }
@@ -49,24 +49,24 @@ public class Player extends Entity{
 
 //Função que atualiza as variaveis para gerar a movimentação
     public void update() throws InterruptedException{
-        if(tecla.rightPressed || tecla.leftPressed || tecla.upPressed || tecla.downPressed) {
+        if(tecla.srightPressed || tecla.sleftPressed || tecla.supPressed || tecla.sdownPressed) {
         // Ajustar a direção e aumentar a velocidade
-        if(tecla.rightPressed) {
+        if(tecla.srightPressed) {
             direction = "right";
             if(speed < 10){
                 speed++;
             }
-        }else if(tecla.leftPressed) {
+        }else if(tecla.sleftPressed) {
             direction = "left";
             if(speed<10){ 
                 speed++;
             }
-        }else if(tecla.upPressed){
+        }else if(tecla.supPressed){
             direction = "up";
             if(speed<10){
                 speed++;
             }
-        }else if(tecla.downPressed){
+        }else if(tecla.sdownPressed){
             direction = "down";
             if(speed<10){
                 speed++;
@@ -75,7 +75,7 @@ public class Player extends Entity{
         
         // Verificar colisão
         collisionOn = false;
-        gp.cChecker.checkTile(this);
+        gp.cChecker.checkTile2(this);
         
         // Movimentar se não houver colisão
         if(collisionOn == false){

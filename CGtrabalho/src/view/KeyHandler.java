@@ -2,13 +2,16 @@ package view;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import tile.TileManager;
 
 public class KeyHandler implements KeyListener{
     public boolean upPressed, downPressed, leftPressed, rightPressed,supPressed, sdownPressed, sleftPressed, srightPressed;
     public GamePanel gp;
+   
     
     public KeyHandler(GamePanel gp){
         this.gp = gp;
+
     }
     
     @Override
@@ -33,6 +36,22 @@ public class KeyHandler implements KeyListener{
                 System.exit(1);
             }else if(code == KeyEvent.VK_ENTER && gp.menuSelect == 0){
                 gp.gameState = 2;
+            }            
+        } 
+        
+        if(gp.gameState == 2){
+            if(code == KeyEvent.VK_DOWN){
+                gp.menuSelect2 = 1;
+            } 
+            
+            if(code == KeyEvent.VK_UP){
+                gp.menuSelect2 = 0;
+            }if(code == KeyEvent.VK_ENTER && gp.menuSelect2 == 0 && gp.controle > 1000000000){
+                gp.pista = 1;
+                gp.gameState = 3;
+            }else if(code == KeyEvent.VK_ENTER && gp.menuSelect2 == 1 && gp.controle > 1000000000){
+                gp.pista = 2;
+                gp.gameState = 3;
             }
         }
         
@@ -77,6 +96,18 @@ public class KeyHandler implements KeyListener{
         }
         if (code == KeyEvent.VK_D) {
             rightPressed = false;
+        }
+        if(code == KeyEvent.VK_UP){
+            supPressed = false;
+        }
+        if(code == KeyEvent.VK_DOWN){
+            sdownPressed = false;
+        }
+        if(code == KeyEvent.VK_RIGHT){
+            srightPressed = false;
+        }
+        if(code == KeyEvent.VK_LEFT){
+            sleftPressed = false;
         }
 
     }

@@ -2,16 +2,23 @@ package view;
 
 import collision.CollisionChecker;
 import entity.Player;
+import entity.Player2;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
-    public int gameState = 0;
+    public int gameState = 1;
+    public int controle = 0;
     
 //configurações da tela
     public final int tileTamanhoOriginal = 16; //16x16 tile
@@ -27,22 +34,37 @@ public class GamePanel extends JPanel implements Runnable{
 //FPS
     public int FPS = 60; 
     
+//Contador de pistas
+    public int pista = 0;
+    
+    public int menuSelect = 0;
+    public int menuSelect2 = 0;
+    
+    public boolean Confirma = false;
+    
 //Variaveis para composição com o game panel
     public Thread gameThread;   
-    public KeyHandler tecla = new KeyHandler();
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public Player player = new Player(this, tecla);
+    
+    
+    public BufferedImage image;
 
-//Função que carrega a posição do jogador no game panel
+//Dados que carregam a posição do jogador no game panel
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
 
 //Carregando variável para criação do cenário
     public TileManager tileM = new TileManager(this);
+    public TileManager tileM2 = new TileManager(this, cChecker);
+    public KeyHandler tecla = new KeyHandler(this);
+    public Player player = new Player(this, tecla);
+    public Player2 player2 = new Player2(this, tecla);
+    
 
 //Construtor do game panel
     public GamePanel(){
+        
         this.setPreferredSize(new Dimension(telaLargura, telaAltura));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);       
@@ -82,8 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
             drawCount++;
             }
             
-            if(timer >= 1000000000){
-                System.out.println("FPS: " + drawCount);
+            if(timer >= 1000000000){                
                 drawCount = 0;
                 timer = 0;
             }
@@ -92,7 +113,12 @@ public class GamePanel extends JPanel implements Runnable{
 
 //Atualiza a pósição do player
     public void update(){
-        player.update();
+        try{
+            player.update();
+            player2.update();
+        }catch (InterruptedException ex){
+            Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     
@@ -100,18 +126,88 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);       
         Graphics2D g2 = (Graphics2D) g; 
-            if(gameState == 0){
-                g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
+            if(gameState == 1){
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
                 String Texto = "Jogo de corrida super legal";
-                int x = telaAltura/8;
-                int y = 50;
+                int x = telaAltura/32;
+                int y = 100;
                 g2.setColor(Color.red);
                 g2.drawString(Texto, x, y);
-            }else if(gameState == 1){
-            //Código para que se apareça as imagens no game panel    
-                tileM.draw(g2);
-                player.draw(g2);       
+                
+                int z = 50;
+                int w = tileTamanho*8;
+            try{
+                image = ImageIO.read(getClass().getResourceAsStream("/menus/Emoji dando joinha"));
+            }catch (IOException ex) {
+                Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                g2.drawImage(image, z, w, tileTamanho*2, tileTamanho*2,null);
+                
+                
+                String text2 = "Jogar";
+                g2.drawString(text2, 300, 300);
+                if(menuSelect == 0){
+                    g2.drawString(">", 250, 300);
+                }
+                
+                String text3 = "Sair";              
+                g2.drawString(text3, 310, 350);
+                if(menuSelect == 1){
+                    g2.drawString(">", 250, 350);
+                }
+                
+            }else if(gameState == 2){                
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
+                String Texto = "Selecione a pista";
+                int x = telaAltura/4;
+                int y = 100;
+                g2.setColor(Color.red);
+                g2.drawString(Texto, x, y);
+                
+                String text2 = "Pista 1";
+                g2.drawString(text2, 300, 300);
+                if(menuSelect2 == 0){
+                    g2.drawString(">", 250, 300);
+                }
+                
+                String text3 = "Pista 2";              
+                g2.drawString(text3,300,350);
+                if(menuSelect2 == 1){
+                    g2.drawString(">",250,350);
+                }
+                
+            //Reboco
+                for(int i=0; i<1000000000; i++){
+                    controle++;
+                }
+                
+            }else if(gameState == 3){
+            //Código para que se apareça as imagens no game panel
+                if(pista == 1){
+                    tileM.draw(g2);
+                    player.draw(g2);
+                    player2.draw(g2);
+                }else if(pista == 2){
+                    tileM2.draw(g2);
+                    player.draw(g2);
+                    player2.draw(g2);
+                }
                 g2.dispose();
+            }else if(gameState == 4){
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
+                String Texto = "player 1 venceu a corrida";
+                int x = telaAltura/16;
+                int y = 300;
+                g2.setColor(Color.red);
+                g2.drawString(Texto, x, y);
+            }else if(gameState == 5){
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
+                String Texto = "player 2 venceu a corrida";
+                int x = telaAltura/16;
+                int y = 300;
+                g2.setColor(Color.red);
+                g2.drawString(Texto, x, y);
+                
             }
     }
 }
