@@ -46,7 +46,21 @@ public class TileManager {
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/Fundo/quadriculada.png"));
             tile[2].collision = false;
             tile[2].linhachegada = true;
-
+            
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/Fundo/Asfalto.png"));
+            
+            tile[4] = new Tile();
+            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/Fundo/Limite.png"));
+            tile[4].collision = true;
+            
+            tile[5] = new Tile();
+            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/Fundo/Limite_Cima.png"));
+            tile[5].collision = true;
+            
+            tile[7] = new Tile();
+            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/Fundo/Limite_Esquerda.png"));
+            tile[7].collision = true;
         } catch (IOException e) {
             e.printStackTrace();
         }

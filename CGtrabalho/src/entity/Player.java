@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import musica.Música;
 import view.GamePanel;
 import view.KeyHandler;
 
@@ -15,6 +16,7 @@ public class Player extends Entity{
     public int screenX = 0;
     public int screenY = 0;
     public int voltas = 0;
+    public Música musica;
     
 //Criação do construtor
     public Player(GamePanel gp, KeyHandler tecla) {
@@ -91,16 +93,15 @@ public class Player extends Entity{
                     break;
                 case "down":
                     y += speed; 
+                    
                     break;
             }
         }else{
+            gp.playSE(4);
             speed = 0; // Reduzir a velocidade se houver colisão
-        }
-    }else{
-        // Reduzir a velocidade se nenhuma tecla for pressionada
-        speed = 0;
         }      
     }
+}
 
 //Funçaõ para carregar as imagens na tela do usuário
     public void draw(Graphics2D g2) {

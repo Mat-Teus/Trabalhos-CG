@@ -21,10 +21,10 @@ public class Janela extends JFrame{
     //Criação do game panel
         GamePanel gamePanel = new GamePanel();
     //Adicionando o game panel na janela
-        janela.add(gamePanel);        
+        janela.add(gamePanel);   
         janela.pack();
-        
-    //Deixando a janela visível e a colocando no meio da tela    
+        gamePanel.playMusic(1);
+    //Dedixando a janela visível e a colocando no meio da tela    
         janela.setLocationRelativeTo(null);
         janela.setVisible(true);
         

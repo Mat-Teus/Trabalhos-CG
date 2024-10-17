@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import musica.Música;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -58,8 +59,10 @@ public class GamePanel extends JPanel implements Runnable{
     public TileManager tileM = new TileManager(this);
     public TileManager tileM2 = new TileManager(this, cChecker);
     public KeyHandler tecla = new KeyHandler(this);
+    public Música musica = new Música();
     public Player player = new Player(this, tecla);
     public Player2 player2 = new Player2(this, tecla);
+    public int selecMus;
     
 
 //Construtor do game panel
@@ -155,8 +158,8 @@ public class GamePanel extends JPanel implements Runnable{
                 if(menuSelect == 1){
                     g2.drawString(">", 250, 350);
                 }
-                
-            }else if(gameState == 2){                
+            }else if(gameState == 2){
+                selecMus = 1;
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
                 String Texto = "Selecione a pista";
                 int x = telaAltura/4;
@@ -187,6 +190,7 @@ public class GamePanel extends JPanel implements Runnable{
                     tileM.draw(g2);
                     player.draw(g2);
                     player2.draw(g2);
+                    
                 }else if(pista == 2){
                     tileM2.draw(g2);
                     player.draw(g2);
@@ -210,4 +214,20 @@ public class GamePanel extends JPanel implements Runnable{
                 
             }
     }
+    
+    public void playMusic(int i){
+        musica.setFile(i);
+        musica.play();
+        musica.loop();
+    }
+    
+    public void stopMusic(){
+        musica.stop();
+    }
+    
+    public void playSE(int i){
+        musica.setFile(i);
+        musica.play();
+    }
 }
+

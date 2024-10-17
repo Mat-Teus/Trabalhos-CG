@@ -36,6 +36,7 @@ public class KeyHandler implements KeyListener{
                 System.exit(1);
             }else if(code == KeyEvent.VK_ENTER && gp.menuSelect == 0){
                 gp.gameState = 2;
+                gp.playSE(5);
             }            
         } 
         
@@ -47,9 +48,11 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_UP){
                 gp.menuSelect2 = 0;
             }if(code == KeyEvent.VK_ENTER && gp.menuSelect2 == 0 && gp.controle > 1000000000){
+                gp.playSE(5);
                 gp.pista = 1;
                 gp.gameState = 3;
             }else if(code == KeyEvent.VK_ENTER && gp.menuSelect2 == 1 && gp.controle > 1000000000){
+                gp.playSE(5);
                 gp.pista = 2;
                 gp.gameState = 3;
             }
