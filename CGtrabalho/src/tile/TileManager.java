@@ -11,19 +11,22 @@ import view.GamePanel;
 import view.KeyHandler;
 
 public class TileManager {
+//Atributos que serão usados
     public GamePanel gp;
     public Tile[] tile;
     public int mapTileNum[][];
     public int pista = 0; 
 
-    public TileManager(GamePanel gp) {
+//Construtor
+    public TileManager(GamePanel gp){
         this.gp = gp;
         tile = new Tile[10];
         mapTileNum = new int [gp.maxTelaColuna][gp.maxTelaLinha]; 
         getTileImage();
         loadMap("/mapa/mapa01.txt");
     }
-    
+
+//Reboco
     public TileManager(GamePanel gp, CollisionChecker cChecker){
         this.gp = gp;
         tile = new Tile[10];
@@ -31,7 +34,8 @@ public class TileManager {
         getTileImage();
         loadMap("/mapa/mapa02.txt");
     }
-    
+
+//Função que carrega as imagens para os tiles e os declara como colisão ou não    
     public void getTileImage(){
         try {
             tile[0] = new Tile();
@@ -65,9 +69,10 @@ public class TileManager {
             e.printStackTrace();
         }
     }
-    
+
+//Função que carrega os mapas    
     public void loadMap(String filePath){      
-        try {
+        try{
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             
@@ -92,7 +97,8 @@ public class TileManager {
         } catch (Exception e) {
         }
     }
-    
+
+//Função que desenha os tiles na tela    
     public void draw(Graphics2D g2){
         int col = 0;
         int row = 0;

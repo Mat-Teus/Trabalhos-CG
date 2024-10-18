@@ -19,7 +19,7 @@ public class Player extends Entity{
     public Música musica;
     
 //Criação do construtor
-    public Player(GamePanel gp, KeyHandler tecla) {
+    public Player(GamePanel gp, KeyHandler tecla){
         this.gp = gp;
         this.tecla = tecla;
         setDefaultValues();
@@ -29,16 +29,16 @@ public class Player extends Entity{
     }
 
 //Função para carregar os valores padrões dos atributos a serem usados
-    public void setDefaultValues() {
+    public void setDefaultValues(){
         x = 100;
         y = 100;
         speed = 0;
         direction = "right";
-        solidArea = new Rectangle(8, 8, 32, 32); // Ajuste os valores conforme necessário
+        solidArea = new Rectangle(8, 8, 32, 32);
     }
 
-    //Função que carrega as imagens que serão usadas pelo player
-    public void getImagemPlayer() {
+//Função que carrega as imagens que serão usadas pelo player
+    public void getImagemPlayer(){
         try{
             right = ImageIO.read(getClass().getResourceAsStream("/player/Car_Right.png"));
             left = ImageIO.read(getClass().getResourceAsStream("/player/Car_Left.png"));
@@ -51,14 +51,14 @@ public class Player extends Entity{
 
 //Função que atualiza as variaveis para gerar a movimentação
     public void update() throws InterruptedException{
-        if(tecla.rightPressed || tecla.leftPressed || tecla.upPressed || tecla.downPressed) {
-        // Ajustar a direção e aumentar a velocidade
-        if(tecla.rightPressed) {
+        if(tecla.rightPressed || tecla.leftPressed || tecla.upPressed || tecla.downPressed){
+    //Controla a direção e aumenta a velocidade
+        if(tecla.rightPressed){
             direction = "right";
             if(speed < 10){
                 speed++;
             }
-        }else if(tecla.leftPressed) {
+        }else if(tecla.leftPressed){
             direction = "left";
             if(speed<10){ 
                 speed++;
@@ -75,7 +75,7 @@ public class Player extends Entity{
             }
         }
         
-        // Verificar colisão
+    // Verificar colisão
         collisionOn = false;
         gp.cChecker.checkTile(this);
         
@@ -97,16 +97,16 @@ public class Player extends Entity{
                     break;
             }
         }else{
-            gp.playSE(4);
-            speed = 0; // Reduzir a velocidade se houver colisão
+            gp.playSE(4); //Sonzinho de colisão
+            speed = 0; //Reduzir a velocidade se houver colisão
         }      
     }
 }
 
-//Funçaõ para carregar as imagens na tela do usuário
+//Função para carregar as imagens na tela do usuário
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
-
+    //Switch que controla a direção
         switch (direction){
             case "right":
                     image = right;

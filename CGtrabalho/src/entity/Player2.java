@@ -17,7 +17,7 @@ public class Player2 extends Entity{
     public int voltas = 0;
     
 //Criação do construtor
-    public Player2(GamePanel gp, KeyHandler tecla) {
+    public Player2(GamePanel gp, KeyHandler tecla){
         this.gp = gp;
         this.tecla = tecla;
         setDefaultValues();
@@ -35,7 +35,7 @@ public class Player2 extends Entity{
         solidArea = new Rectangle(8, 8, 32, 32);
     }
 
-    //Função que carrega as imagens que serão usadas pelo player
+//Função que carrega as imagens que serão usadas pelo player
     public void getImagemPlayer(){
         try{
             right = ImageIO.read(getClass().getResourceAsStream("/player/Car2_Right.png"));
@@ -50,7 +50,7 @@ public class Player2 extends Entity{
 //Função que atualiza as variaveis para gerar a movimentação
     public void update() throws InterruptedException{
         if(tecla.srightPressed || tecla.sleftPressed || tecla.supPressed || tecla.sdownPressed) {
-        // Ajustar a direção e aumentar a velocidade
+    // Controle de direção e aumento de velocidade
         if(tecla.srightPressed) {
             direction = "right";
             if(speed < 10){
@@ -94,18 +94,16 @@ public class Player2 extends Entity{
                     break;
             }
         }else{
-            speed = 0; // Reduzir a velocidade se houver colisão
+            gp.playSE(4);//Som de batida
+            speed = 0;//Reduzir a velocidade se houver colisão
         }
-    }else{
-        // Reduzir a velocidade se nenhuma tecla for pressionada
-        speed = 0;
-        }      
-    }
+    }      
+}
 
 //Funçaõ para carregar as imagens na tela do usuário
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
-
+    //Switch que controla a direção
         switch (direction){
             case "right":
                     image = right;

@@ -5,24 +5,27 @@ import java.awt.event.KeyListener;
 import tile.TileManager;
 
 public class KeyHandler implements KeyListener{
+//Atributos que serão usados
     public boolean upPressed, downPressed, leftPressed, rightPressed,supPressed, sdownPressed, sleftPressed, srightPressed;
     public GamePanel gp;
    
-    
+ 
+//Construtor
     public KeyHandler(GamePanel gp){
         this.gp = gp;
-
     }
     
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e){
 
     }
 
+//Funções do key listener que ldeem as teclas
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e){
         int code = e.getKeyCode();
         
+        //Mexer a setinha
         if(gp.gameState == 1){
             if(code == KeyEvent.VK_DOWN){
                 gp.menuSelect = 1;
@@ -32,6 +35,7 @@ public class KeyHandler implements KeyListener{
                 gp.menuSelect = 0;
             }
             
+            //Selecionar opção
             if(code == KeyEvent.VK_ENTER && gp.menuSelect == 1){
                 System.exit(1);
             }else if(code == KeyEvent.VK_ENTER && gp.menuSelect == 0){
@@ -41,13 +45,17 @@ public class KeyHandler implements KeyListener{
         } 
         
         if(gp.gameState == 2){
+            //mexer a setinha
             if(code == KeyEvent.VK_DOWN){
                 gp.menuSelect2 = 1;
             } 
             
             if(code == KeyEvent.VK_UP){
                 gp.menuSelect2 = 0;
-            }if(code == KeyEvent.VK_ENTER && gp.menuSelect2 == 0 && gp.controle > 1000000000){
+            }
+            
+            //Selecionar a opção com reboco
+            if(code == KeyEvent.VK_ENTER && gp.menuSelect2 == 0 && gp.controle > 1000000000){
                 gp.playSE(5);
                 gp.pista = 1;
                 gp.gameState = 3;

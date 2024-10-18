@@ -18,7 +18,9 @@ import musica.Música;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
+//variavel que controla as telas
     public int gameState = 1;
+//Mais reboco
     public int controle = 0;
     
 //configurações da tela
@@ -124,17 +126,19 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    
+//Função que desenha as coisas na telaa    
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);       
         Graphics2D g2 = (Graphics2D) g; 
             if(gameState == 1){
+            //Tela 1 do menu
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
                 String Texto = "Jogo de corrida super legal";
                 int x = telaAltura/32;
                 int y = 100;
                 g2.setColor(Color.red);
+                //Desenha na tela o texto nas coordenadas x y
                 g2.drawString(Texto, x, y);
                 
                 int z = 50;
@@ -144,35 +148,42 @@ public class GamePanel extends JPanel implements Runnable{
             }catch (IOException ex) {
                 Logger.getLogger(GamePanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+                //Coloca o PNG falso na tela (FUI ENGANADO)
                 g2.drawImage(image, z, w, tileTamanho*2, tileTamanho*2,null);
                 
-                
+                //Coloca a palavra jogar na tela
                 String text2 = "Jogar";
                 g2.drawString(text2, 300, 300);
                 if(menuSelect == 0){
                     g2.drawString(">", 250, 300);
                 }
                 
+                //Coloca a palavra sair na tela
                 String text3 = "Sair";              
                 g2.drawString(text3, 310, 350);
                 if(menuSelect == 1){
                     g2.drawString(">", 250, 350);
                 }
             }else if(gameState == 2){
-                selecMus = 1;
+                //Tela 2
+
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
                 String Texto = "Selecione a pista";
                 int x = telaAltura/4;
                 int y = 100;
                 g2.setColor(Color.red);
+                
+                //Coloca a palavra selecione a pista na tela
                 g2.drawString(Texto, x, y);
                 
+                //Coloca a palavra pista 1 na tela
                 String text2 = "Pista 1";
                 g2.drawString(text2, 300, 300);
                 if(menuSelect2 == 0){
                     g2.drawString(">", 250, 300);
                 }
                 
+                //Coloca a palavra pista 2 na tela
                 String text3 = "Pista 2";              
                 g2.drawString(text3,300,350);
                 if(menuSelect2 == 1){
@@ -198,6 +209,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
                 g2.dispose();
             }else if(gameState == 4){
+                //Tela de vitória player 1
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
                 String Texto = "player 1 venceu a corrida";
                 int x = telaAltura/16;
@@ -205,6 +217,7 @@ public class GamePanel extends JPanel implements Runnable{
                 g2.setColor(Color.red);
                 g2.drawString(Texto, x, y);
             }else if(gameState == 5){
+                //Tela de vitória player 2
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD,50F));
                 String Texto = "player 2 venceu a corrida";
                 int x = telaAltura/16;
@@ -214,7 +227,8 @@ public class GamePanel extends JPanel implements Runnable{
                 
             }
     }
-    
+
+//Funções que controlam a música
     public void playMusic(int i){
         musica.setFile(i);
         musica.play();
